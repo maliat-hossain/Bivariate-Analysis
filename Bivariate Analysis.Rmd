@@ -1,0 +1,72 @@
+---
+title: "Bivariate Analysis"
+author: "Maliat"
+date: "10/5/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+setwd("C:/Users/malia/OneDrive/Desktop/710 Memos")
+library(tidyverse)
+library(magrittr)
+library(foreign)
+library(descr)
+library(lubridate)
+library(expss)
+GSS <- read.dta("C:\\Users\\malia\\Downloads\\GSS1972_2014v12.dta")
+```
+
+```{r}
+GSS$socclass<- cut(GSS$educ, c(0,11,12,99), labels=c("high school dropout","highschool graduate","at least some college"))
+```
+
+### views on anti-miscegenation on the basis of social class(education)
+```{r}
+GSS.1 <- GSS %>%
+  select(year,socclass,racmar)%>%
+  filter(year %in% c("2000","2002","2004","2006","2008","2010","2012","2014"))
+  crosstab(GSS.1$socclass, GSS.1$racmar, prop.r = T, chisq = T, dnn=c("Social Class", "Views on anti-miscegenation laws on the basis of education"))
+```
+
+### views on anti-miscegenation  on the basis of race
+```{r}
+GSS.1 <- GSS %>%
+  select(year,race,racmar)%>%
+  filter(year %in% c("2000","2002","2004","2006","2008","2010","2012","2014"))
+  crosstab(GSS.1$race, GSS.1$racmar, prop.r = T, chisq = T, dnn=c("Race", "Views on anti_miscegenation on the basis of race"))
+```
+### views on abortion on the basis of social class(education)
+```{r}
+GSS.1 <- GSS %>%
+  select(year,socclass,abany)%>%
+  filter(year %in% c("2000","2002","2004","2006","2008","2010","2012","2014"))
+  crosstab(GSS.1$socclass, GSS.1$abany, prop.r = T, chisq = T, dnn=c("Social Class", "views on abortion on the basis of education"))
+```
+### views on abortion on the basis of race
+
+```{r}
+GSS.1 <- GSS %>%
+  select(year,race,abany)%>%
+  filter(year %in% c("2000","2002","2004","2006","2008","2010","2012","2014"))
+  crosstab(GSS.1$race, GSS.1$abany, prop.r = T, chisq = T, dnn=c("race", "views on abortion on the basis of race "))
+```
+###views on African American's income inequality due to discrimination on the basis of education
+```{r}
+GSS.1 <- GSS %>%
+  select(year,socclass,racdif1)%>%
+  filter(year %in% c("2000","2002","2004","2006","2008","2010","2012","2014"))
+  crosstab(GSS.1$socclass, GSS.1$racdif1, prop.r = T, chisq = T, dnn=c("social class", "views on African American's income inequality due to discrimination on the basis of education"))
+
+```
+###views on African American's income inequality due to discrimination on the basis of race
+```{r}
+GSS.1 <- GSS %>%
+  select(year,race,racdif1)%>%
+  filter(year %in% c("2000","2002","2004","2006","2008","2010","2012","2014"))
+  crosstab(GSS.1$race, GSS.1$racdif1, prop.r = T, chisq = T, dnn=c("race", "views on African American's income inequality due to discrimination on the basis of race"))
+
+```
